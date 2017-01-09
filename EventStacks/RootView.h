@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "ViewController.h"
 #import "LeftViewController.h"
+#import "UIView+AddViewController.h"
 
 @interface RootView : UIViewController
 

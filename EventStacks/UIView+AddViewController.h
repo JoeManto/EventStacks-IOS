@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol AddViewControllerProtocol <NSObject>
 
+@end
 @interface AddViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
 
-
+@property (nonatomic, assign) id<AddViewControllerProtocol> delegate;
 
 @end

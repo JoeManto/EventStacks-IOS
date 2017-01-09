@@ -77,12 +77,11 @@ NSMutableDictionary *dayData;
     //navItem.leftBarButtonItem = leftButton;
     
     //UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"+" style:UIBarButtonItemStylePlain target:self action:@selector(yourOtherMethod:)];
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(yourOtherMethod:)];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(changeToAddView:)];
+    
     rightButton.tintColor = [UIColor redColor];
     navItem.rightBarButtonItem = rightButton;
     
-  
-
     _navBar.items = @[navItem];
     
     [self.view addSubview:_navBar];
@@ -136,7 +135,7 @@ NSMutableDictionary *dayData;
         cell.contentView.frame = contentViewFrame;
         [cell addSubviews];
     }
-    NSString *sectionTitle = [cellSections objectAtIndex:indexPath.section];
+   //NSString *sectionTitle = [cellSections objectAtIndex:indexPath.section];
     NSDictionary *rowData = [[dayData objectForKey:@"Monday"]objectForKey:[NSString stringWithFormat:@"trip%ld",indexPath.row]];
     NSLog(@"%@ %ld",rowData,indexPath.row);
     
@@ -180,6 +179,13 @@ NSMutableDictionary *dayData;
     
 }
 
+-(void)changeToAddView:(id)sender{
+    
+    [_delegate showSideView];
+    
+    NSLog(@"Changed to Add View");
+}
+
 
 -(void)tableInit{
     _table = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
@@ -195,29 +201,6 @@ NSMutableDictionary *dayData;
 
 }
 
-
-/*
- NSMutableArray* newDays = [NSMutableArray arrayWithArray:sections];
- NSMutableArray* test = [[NSMutableArray alloc]init];
- [test addObject:[NSNumber numberWithInteger:3]];
- [test addObject:[NSNumber numberWithInteger:2]];
- [test addObject:[NSNumber numberWithInteger:1]];
- NSLog(@"%@",test);
- int j;
- NSNumber * temp;
- for(int i = 1;i < test.count;i++){
- j = i;
- NSLog(@"%@ with %@",[test objectAtIndex:j],[test objectAtIndex:j-1]);
- while(j>0 && ([test objectAtIndex:j] < [test objectAtIndex:j-1]) ){
- NSLog(@"hit");
- temp = [test objectAtIndex:j-1];
- [test replaceObjectAtIndex:j-1 withObject:[test objectAtIndex:j]];
- [test replaceObjectAtIndex:j withObject:temp];
- j--;
- }
- NSLog(@"%@",test);
- }
- */
 
 
 @end
