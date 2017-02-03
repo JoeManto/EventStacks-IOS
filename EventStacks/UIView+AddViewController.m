@@ -13,23 +13,38 @@
 @property (strong,nonatomic) UITableView *table;
 @property (strong,nonatomic) UINavigationBar * navBar;
 @property (strong,nonatomic) NSMutableDictionary* data;
+@property (strong,nonatomic) NSMutableArray *keys;
 
 @end
 
-NSArray * sections;
-NSArray * keys;
-NSInteger inx;
-NSInteger section1NumRows;
 
 @implementation AddViewController 
 
 - (void)viewDidLoad {
-    inx = 0;
-    section1NumRows = 1;
-    //change data layout to conform to insertatindexforrow.
-    keys = @[@"EventName",@"EventDate",@"EventTime",@"ShouldNotify",@"NotifyTime"];
-    sections = @[@"Event Details",@"Event Notfication"];
-    _data = [[NSMutableDictionary alloc]initWithObjects:@[@"BlankName",[NSDate date],@"0:00AM",@0,[NSDate date]] forKeys:@[@"EventName",@"EventDate",@"EventTime",@"ShouldNotify",@"NotifyTime"]];
+
+    
+    _data = [[NSMutableDictionary alloc]init];
+    [_data setObject:@"THIS IS THE NAME" forKey:@"EventName"];
+    [_data setObject:[NSDate date] forKey:@"EventDate"];
+    [_data setObject:@"3:00PM 5/19/16" forKey:@"EventTime"];
+    [_data setObject:@0 forKey:@"ShouldNotify"];
+    
+    NSMutableArray *insideArray = [[NSMutableArray alloc] init];
+    _keys = [[NSMutableArray alloc]init];
+    [_keys addObject:insideArray];
+    [insideArray addObject:@"sss"];
+    [insideArray addObject:@"ssssss"];
+    [_keys addObject:@"xxxx"];
+    [_keys addObject:@"xxxxxxx"];
+    
+    
+    
+    //NSMutableArray *insideArray = [[NSMutableArray alloc] initWithObjects:@"EventName",@"EventDate",@"EventTime",nil];
+    //_keys = [[NSMutableArray alloc] initWithObjects:@"ShouldNotify",@"NotifyTime", nil];
+    
+    
+    NSLog(@"%@",_keys);
+
     [self tableInit];
   
 }
@@ -66,30 +81,87 @@ NSInteger section1NumRows;
         return 3;
     }
     if(section == 1){
-        return section1NumRows;
+        if(_data.count == 5){
+            return 2;
+        }else{
+            return 1;
+        }
     }
     return 0;
 }
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == 1 && indexPath.row == 0){
-        indexPath = [NSIndexPath indexPathForRow:3 inSection:1];
-    }
+
     static NSString *cellIdentifier = @"cellIdentifier";
     UIView * cv;
     UITableViewCell *cell = [self.table dequeueReusableCellWithIdentifier:cellIdentifier];
     if(cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
-        //CGRect contentViewFrame = cell.contentView.frame;
-        //contentViewFrame.size.width = _table.frame.size.width;
-        //cell.contentView.frame = contentViewFrame;
+        CGRect contentViewFrame = cell.contentView.frame;
+        contentViewFrame.size.width = _table.frame.size.width;
+        cell.contentView.frame = contentViewFrame;
        
     }
     cv = cell.contentView;
-    cell.textLabel.text = [keys objectAtIndex:indexPath.row];
+   /* if(indexPath.section != 1){
+        cell.textLabel.text = [_keys objectAtIndex:indexPath.row];
+    }else{
+        cell.textLabel.text = [_keys objectAtIndex:indexPath.row+3];
+    }
+    */
+  
+    /*
+    if([[_data objectForKey:[_keys objectAtIndex:indexPath.row]] isKindOfClass:[NSString class]]){
+        NSString * string = [_data objectForKey:[_keys objectAtIndex:indexPath.row]];
+        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, -25, 200, 100)];
+        dataLabel.text = [NSString stringWithFormat:@"%@",string];
+        [cv addSubview:dataLabel];
+    }else if([[_data objectForKey:[_keys objectAtIndex:indexPath.row]] isKindOfClass:[NSDate class]]){
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"dd/MM/yyyy"];
+        NSDate * date = [_data objectForKey:[_keys objectAtIndex:indexPath.row]];
+        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, -25, 200, 100)];
+        dataLabel.text = [NSString stringWithFormat:@"%@",[dateFormat stringFromDate:date]];
+        [cv addSubview:dataLabel];
+    }else if([[_data objectForKey:[_keys objectAtIndex:indexPath.row]] isKindOfClass:[NSNumber class]]){
+        NSNumber * number =  [_data objectForKey:[_keys objectAtIndex:indexPath.row]];
+        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, -25, 200, 100)];
+        dataLabel.text = [NSString stringWithFormat:@"%@",number];
+        
+        UISwitch *notifySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(180, -25, 0, 0)];
+        [notifySwitch addTarget:self action:@selector(switchToggled:) forControlEvents: UIControlEventTouchUpInside];
+        [cv addSubview:notifySwitch];
+    }
+    */
+    /*
+    if([_dataArray[indexPath.section][indexPath.row] isKindOfClass:[NSString class]]){
+        NSString * string = _dataArray[indexPath.section][indexPath.row];
+        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(cv.frame.size.width-100, -cv.frame.size.height/2, 200, 100)];
+        dataLabel.text = [NSString stringWithFormat:@"%@",string];
+        [cv addSubview:dataLabel];
+    }else if([_dataArray[indexPath.section][indexPath.row] isKindOfClass:[NSDate class]]){
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"dd/MM/yyyy"];
+        NSDate * date = _dataArray[indexPath.section][indexPath.row];
+        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(cv.frame.size.width-100, -cv.frame.size.height/2, 200, 100)];
+        dataLabel.text = [NSString stringWithFormat:@"%@",[dateFormat stringFromDate:date]];
+        [cv addSubview:dataLabel];
+    }else if([_dataArray[indexPath.section][indexPath.row] isKindOfClass:[NSNumber class]]){
+        NSNumber * number = _dataArray[indexPath.section][indexPath.row];
+        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(cv.frame.size.width-100, -cv.frame.size.height/2, 200, 100)];
+        dataLabel.text = [NSString stringWithFormat:@"%@",number];
+        
+        UISwitch *notifySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(cv.frame.size.width-100, cv.frame.size.height/2-13, 0, 0)];
+        [notifySwitch addTarget:self action:@selector(switchToggled:) forControlEvents: UIControlEventTouchUpInside];
+        [cv addSubview:notifySwitch];
+    }
+
+    */
     
     
+    
+    /*
     if([[_data objectForKey:[keys objectAtIndex:indexPath.row]] isKindOfClass:[NSString class]]){
         NSString * string = [_data objectForKey:[keys objectAtIndex:indexPath.row]];
         UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(cv.frame.size.width-100, -cv.frame.size.height/2, 200, 100)];
@@ -111,17 +183,16 @@ NSInteger section1NumRows;
         [notifySwitch addTarget:self action:@selector(switchToggled:) forControlEvents: UIControlEventTouchUpInside];
         [cv addSubview:notifySwitch];
     }
-   
+   */
   
    /* if(indexPath.row != 2){
          UIImageView *seperatorLine = [[UIImageView alloc] initWithFrame:CGRectMake(15, cell.frame.size.height+5, cell.frame.size.width, 0.5)];
          [seperatorLine setBackgroundColor:[UIColor colorWithRed:0.87 green:0.87 blue:0.87 alpha:1.0]];
          [cell addSubview:seperatorLine];
-        
     }
     */
     
-    NSLog(@"index section %ld index row %ld",indexPath.section,indexPath.row);
+   // NSLog(@"index section %ld index row %ld",indexPath.section,indexPath.row);
     return cell;
 }
 
@@ -136,34 +207,47 @@ NSInteger section1NumRows;
 
 
 -(void)switchToggled:(id)selctor{
-    if(section1NumRows < 2){
-        section1NumRows++;
-        NSArray *insertIndexPaths = [NSArray arrayWithObjects:
-                                 [NSIndexPath indexPathForRow:1 inSection:1],
-                                 nil];
+    
+    
+        NSArray *insertIndexPaths = [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:1],nil];
         [_table beginUpdates];
-        [_table insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationRight];
-       // [_table reloadRowsAtIndexPaths: withRowAnimation:UITableViewRowAnimationRight];
-        NSLog(@"SS");
-        [_table endUpdates];
-       
+    
+        //[_table insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationRight];
         
-    }else{
-        section1NumRows--;
-        NSArray *insertIndexPaths = [NSArray arrayWithObjects:
-                                     [NSIndexPath indexPathForRow:1 inSection:1],
-                                     nil];
-        [_table beginUpdates];
-        NSLog(@"sss");
-        [_table deleteRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationRight];
+        [_table insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationLeft];
+        [_table reloadData];
         [_table endUpdates];
-       
-    }
+      
+        
+        
+        //[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]].translatesAutoresizingMaskIntoConstraints = YES;
+        /*[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]].frame = CGRectMake(
+                                                                        _table.frame.size.width/2, _table.frame.size.width/2, 200, 200);*/
+    
+        
+        //NSLog(@"Size After: %f", [_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]].contentView.frame.size.height);
+      
+        NSArray *deleteIndexPaths = [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:1],nil];
+        [_table beginUpdates];
+        
+        [_table deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationRight];
+       // [[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]] removeFromSuperview];
+        
+        [_table endUpdates];
+        
+        
+        
+        
+        //[NSLog(@"%@",[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]]);
+        //_table.contentSize = tableView.sizeThatFits(CGSize(width: tableView.bounds.size.width, height: CGFloat.max))
+        //[_table contentSize] = _table.Si
+        NSLog(@"Size After: %f", [_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]].contentView.frame.size.height);
+    
+    //NSLog(@" s %ld",[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]].subviews.count);
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     //UITouch *touch = [touches anyObject];
-    
     /* if(count < 1){
      [_delegate showSideView];
      count++;
@@ -183,7 +267,7 @@ NSInteger section1NumRows;
 
 -(void)tableInit{
     _table = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    _table.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:1.0];
+    [_table setBackgroundColor:[UIColor whiteColor]];
     _table.delegate = self;
     _table.dataSource = self;
     _table.alwaysBounceVertical = true;

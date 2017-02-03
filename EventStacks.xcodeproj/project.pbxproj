@@ -254,7 +254,7 @@
 		70F6F3061E1A0FAB003F1D6B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "Joe Manto";
 				TargetAttributes = {
 					70F6F30D1E1A0FAB003F1D6B = {
@@ -406,6 +406,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -453,6 +454,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -563,6 +565,7 @@
 				70F6F3401E1A0FAB003F1D6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		70F6F3411E1A0FAB003F1D6B /* Build configuration list for PBXNativeTarget "EventStacksTests" */ = {
 			isa = XCConfigurationList;
@@ -571,6 +574,7 @@
 				70F6F3431E1A0FAB003F1D6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		70F6F3441E1A0FAB003F1D6B /* Build configuration list for PBXNativeTarget "EventStacksUITests" */ = {
 			isa = XCConfigurationList;
@@ -579,6 +583,7 @@
 				70F6F3461E1A0FAB003F1D6B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
