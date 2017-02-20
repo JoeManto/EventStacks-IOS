@@ -15,56 +15,64 @@
 @property (strong,nonatomic) NSMutableDictionary* data;
 @property (strong,nonatomic) NSMutableArray *keys;
 
-@end
+@property (strong,nonatomic) UITextField * EventName;
+@property (strong,nonatomic) UILabel * EventDate;
+@property (strong,nonatomic) UILabel * EventTime;
+@property (strong,nonatomic) UILabel * EventNotify;
 
+@property (nonatomic) UIDatePicker * datePicker;
+@property (nonatomic) UIToolbar * toolBar;
+
+@property (nonatomic, assign) id currentResponder;
+
+@end
 
 @implementation AddViewController 
 
-- (void)viewDidLoad {
-
-    
+- (void)viewDidLoad
+{
     _data = [[NSMutableDictionary alloc]init];
-    [_data setObject:@"THIS IS THE NAME" forKey:@"EventName"];
-    [_data setObject:[NSDate date] forKey:@"EventDate"];
-    [_data setObject:@"3:00PM 5/19/16" forKey:@"EventTime"];
-    [_data setObject:@0 forKey:@"ShouldNotify"];
+    [_data setObject:@"Blank Name" forKey:@"Event Name"];
+    [_data setObject:[NSDate date] forKey:@"Event Date"];
+    [_data setObject:@"3:00PM" forKey:@"Event Time"];
+    [_data setObject:@0 forKey:@"Should Notify"];
     
-    NSMutableArray *insideArray = [[NSMutableArray alloc] init];
     _keys = [[NSMutableArray alloc]init];
-    [_keys addObject:insideArray];
-    [insideArray addObject:@"sss"];
-    [insideArray addObject:@"ssssss"];
-    [_keys addObject:@"xxxx"];
-    [_keys addObject:@"xxxxxxx"];
+    NSMutableArray *insideArray1 = [[NSMutableArray alloc] init];
+    [insideArray1 addObject:@"Event Name"];
+    [insideArray1 addObject:@"Event Date"];
+    [insideArray1 addObject:@"Event Time"];
     
+    NSMutableArray *insideArray2 = [[NSMutableArray alloc] init];
+    [insideArray2 addObject:@"Should Notify"];
+    [insideArray2 addObject:@"Notify Time"];
     
-    
-    //NSMutableArray *insideArray = [[NSMutableArray alloc] initWithObjects:@"EventName",@"EventDate",@"EventTime",nil];
-    //_keys = [[NSMutableArray alloc] initWithObjects:@"ShouldNotify",@"NotifyTime", nil];
-    
-    
-    NSLog(@"%@",_keys);
+    [_keys addObject:insideArray1];
+    [_keys addObject:insideArray2];
 
     [self tableInit];
-  
-}
-
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    [self navBarInit];
     
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
+    [self.view addGestureRecognizer:singleTap];
+}
+//-------------------Delegate_Methods--------------------------
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 40)];
     [headerView setBackgroundColor:[UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1.0]];
     UIView * lineBot = [[UIView alloc]initWithFrame:CGRectMake(0, 34.4, self.view.frame.size.width, 0.4)];
     lineBot.backgroundColor = [UIColor colorWithRed:0.77 green:0.77 blue:0.77 alpha:1.0];
     UIView * lineTop = [[UIView alloc]initWithFrame:CGRectMake(0, 0.6, self.view.frame.size.width, 0.4)];
     lineTop.backgroundColor = [UIColor colorWithRed:0.77 green:0.77 blue:0.77 alpha:1.0];
-    
     [headerView addSubview:lineTop];
     [headerView addSubview:lineBot];
     return headerView;
 }
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
     return 35.0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -72,11 +80,12 @@
     return 50.0f;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return 2;
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     if(section == 0){
         return 3;
     }
@@ -89,183 +98,81 @@
     }
     return 0;
 }
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     static NSString *cellIdentifier = @"cellIdentifier";
     UIView * cv;
     UITableViewCell *cell = [self.table dequeueReusableCellWithIdentifier:cellIdentifier];
-    if(cell == nil) {
+    if(cell == nil)
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         CGRect contentViewFrame = cell.contentView.frame;
         contentViewFrame.size.width = _table.frame.size.width;
         cell.contentView.frame = contentViewFrame;
-       
-    }
-    cv = cell.contentView;
-   /* if(indexPath.section != 1){
-        cell.textLabel.text = [_keys objectAtIndex:indexPath.row];
-    }else{
-        cell.textLabel.text = [_keys objectAtIndex:indexPath.row+3];
-    }
-    */
-  
-    /*
-    if([[_data objectForKey:[_keys objectAtIndex:indexPath.row]] isKindOfClass:[NSString class]]){
-        NSString * string = [_data objectForKey:[_keys objectAtIndex:indexPath.row]];
-        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, -25, 200, 100)];
-        dataLabel.text = [NSString stringWithFormat:@"%@",string];
-        [cv addSubview:dataLabel];
-    }else if([[_data objectForKey:[_keys objectAtIndex:indexPath.row]] isKindOfClass:[NSDate class]]){
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"dd/MM/yyyy"];
-        NSDate * date = [_data objectForKey:[_keys objectAtIndex:indexPath.row]];
-        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, -25, 200, 100)];
-        dataLabel.text = [NSString stringWithFormat:@"%@",[dateFormat stringFromDate:date]];
-        [cv addSubview:dataLabel];
-    }else if([[_data objectForKey:[_keys objectAtIndex:indexPath.row]] isKindOfClass:[NSNumber class]]){
-        NSNumber * number =  [_data objectForKey:[_keys objectAtIndex:indexPath.row]];
-        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(180, -25, 200, 100)];
-        dataLabel.text = [NSString stringWithFormat:@"%@",number];
-        
-        UISwitch *notifySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(180, -25, 0, 0)];
-        [notifySwitch addTarget:self action:@selector(switchToggled:) forControlEvents: UIControlEventTouchUpInside];
-        [cv addSubview:notifySwitch];
-    }
-    */
-    /*
-    if([_dataArray[indexPath.section][indexPath.row] isKindOfClass:[NSString class]]){
-        NSString * string = _dataArray[indexPath.section][indexPath.row];
-        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(cv.frame.size.width-100, -cv.frame.size.height/2, 200, 100)];
-        dataLabel.text = [NSString stringWithFormat:@"%@",string];
-        [cv addSubview:dataLabel];
-    }else if([_dataArray[indexPath.section][indexPath.row] isKindOfClass:[NSDate class]]){
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"dd/MM/yyyy"];
-        NSDate * date = _dataArray[indexPath.section][indexPath.row];
-        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(cv.frame.size.width-100, -cv.frame.size.height/2, 200, 100)];
-        dataLabel.text = [NSString stringWithFormat:@"%@",[dateFormat stringFromDate:date]];
-        [cv addSubview:dataLabel];
-    }else if([_dataArray[indexPath.section][indexPath.row] isKindOfClass:[NSNumber class]]){
-        NSNumber * number = _dataArray[indexPath.section][indexPath.row];
-        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(cv.frame.size.width-100, -cv.frame.size.height/2, 200, 100)];
-        dataLabel.text = [NSString stringWithFormat:@"%@",number];
-        
-        UISwitch *notifySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(cv.frame.size.width-100, cv.frame.size.height/2-13, 0, 0)];
-        [notifySwitch addTarget:self action:@selector(switchToggled:) forControlEvents: UIControlEventTouchUpInside];
-        [cv addSubview:notifySwitch];
-    }
 
-    */
-    
-    
-    
-    /*
-    if([[_data objectForKey:[keys objectAtIndex:indexPath.row]] isKindOfClass:[NSString class]]){
-        NSString * string = [_data objectForKey:[keys objectAtIndex:indexPath.row]];
-        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(cv.frame.size.width-100, -cv.frame.size.height/2, 200, 100)];
-        dataLabel.text = [NSString stringWithFormat:@"%@",string];
-        [cv addSubview:dataLabel];
-    }else if([[_data objectForKey:[keys objectAtIndex:indexPath.row]] isKindOfClass:[NSDate class]]){
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:@"dd/MM/yyyy"];
-        NSDate * date = [_data objectForKey:[keys objectAtIndex:indexPath.row]];
-        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(cv.frame.size.width-100, -cv.frame.size.height/2, 200, 100)];
-        dataLabel.text = [NSString stringWithFormat:@"%@",[dateFormat stringFromDate:date]];
-        [cv addSubview:dataLabel];
-    }else if([[_data objectForKey:[keys objectAtIndex:indexPath.row]] isKindOfClass:[NSNumber class]]){
-        NSNumber * number = [_data objectForKey:[keys objectAtIndex:indexPath.row]];
-        UILabel * dataLabel = [[UILabel alloc]initWithFrame:CGRectMake(cv.frame.size.width-100, -cv.frame.size.height/2, 200, 100)];
-        dataLabel.text = [NSString stringWithFormat:@"%@",number];
+    cv = cell.contentView;
+    cell.textLabel.text = _keys[indexPath.section][indexPath.row];
+    if([[_data objectForKey:_keys[indexPath.section][indexPath.row]] isKindOfClass:[NSString class]]){
+             NSString * string = [_data objectForKey:_keys[indexPath.section][indexPath.row]];
+            NSLog(@"section %ld row %ld",indexPath.section,indexPath.row);
+            if(indexPath.section == 0){
+                if(indexPath.row == 0){
+                    [self configEventNameView:string];
+                    [cv addSubview:_EventName];
+                }else if(indexPath.row == 2)
+                    [self configEventTime:string];
+                    [cv addSubview:_EventTime];
+            }else
+                [self configEventNotifyTimeView:string];
+                [cv addSubview:_EventNotify];
         
-        UISwitch *notifySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(cv.frame.size.width-100, cv.frame.size.height/2-13, 0, 0)];
+    }else if([[_data objectForKey:_keys[indexPath.section][indexPath.row]] isKindOfClass:[NSDate class]]){
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:@"MM/dd/yyyy"];
+        NSDate * date = [_data objectForKey:_keys[indexPath.section][indexPath.row]];
+        [self configEventDateView];
+        _EventDate.text = [NSString stringWithFormat:@"%@",[dateFormat stringFromDate:date]];
+        [cv addSubview:_EventDate];
+    }else if([[_data objectForKey:_keys[indexPath.section][indexPath.row]] isKindOfClass:[NSNumber class]]){
+        UISwitch *notifySwitch = [[UISwitch alloc] initWithFrame:CGRectMake(300, 10, 0, 0)];
         [notifySwitch addTarget:self action:@selector(switchToggled:) forControlEvents: UIControlEventTouchUpInside];
         [cv addSubview:notifySwitch];
     }
-   */
-  
-   /* if(indexPath.row != 2){
-         UIImageView *seperatorLine = [[UIImageView alloc] initWithFrame:CGRectMake(15, cell.frame.size.height+5, cell.frame.size.width, 0.5)];
-         [seperatorLine setBackgroundColor:[UIColor colorWithRed:0.87 green:0.87 blue:0.87 alpha:1.0]];
-         [cell addSubview:seperatorLine];
-    }
-    */
-    
-   // NSLog(@"index section %ld index row %ld",indexPath.section,indexPath.row);
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
 
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    /*
-    
-    EditSelectedView * editingView = [[EditSelectedView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-150, self.view.frame.size.height/2-150, 300, 300)];
-    [self.view addSubview:editingView];
-    */
 }
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
 
-
--(void)switchToggled:(id)selctor{
-    
-    
-        NSArray *insertIndexPaths = [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:1],nil];
-        [_table beginUpdates];
-    
-        //[_table insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationRight];
-        
-        [_table insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationLeft];
-        [_table reloadData];
-        [_table endUpdates];
-      
-        
-        
-        //[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]].translatesAutoresizingMaskIntoConstraints = YES;
-        /*[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]].frame = CGRectMake(
-                                                                        _table.frame.size.width/2, _table.frame.size.width/2, 200, 200);*/
-    
-        
-        //NSLog(@"Size After: %f", [_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:1]].contentView.frame.size.height);
-      
-        NSArray *deleteIndexPaths = [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:1],nil];
-        [_table beginUpdates];
-        
-        [_table deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationRight];
-       // [[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]] removeFromSuperview];
-        
-        [_table endUpdates];
-        
-        
-        
-        
-        //[NSLog(@"%@",[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]]);
-        //_table.contentSize = tableView.sizeThatFits(CGSize(width: tableView.bounds.size.width, height: CGFloat.max))
-        //[_table contentSize] = _table.Si
-        NSLog(@"Size After: %f", [_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]].contentView.frame.size.height);
-    
-    //NSLog(@" s %ld",[_table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:1 inSection:1]].subviews.count);
 }
-
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    //UITouch *touch = [touches anyObject];
-    /* if(count < 1){
-     [_delegate showSideView];
-     count++;
-     }else if(count == 1){
-     [_delegate removeSideView];
-     count = 0;
-     }
-     */
-}
-
-
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
+}
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
     
 }
-
-
--(void)tableInit{
+- (void)textFieldDidEndEditing:(UITextView *)textView
+{
+    
+}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    [_currentResponder resignFirstResponder];
+    [self removeDatePickerAndToolBar:_EventDate];
+    _currentResponder = _EventName;
+    return true;
+}
+- (BOOL)textFieldShouldReturn: (UITextField *) textField
+{
+    return YES;
+}
+//-----------------------Config_Methods--------------------------
+- (void)tableInit
+{
     _table = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     [_table setBackgroundColor:[UIColor whiteColor]];
     _table.delegate = self;
@@ -274,11 +181,178 @@
     _table.showsVerticalScrollIndicator = true;
     _table.contentInset = UIEdgeInsetsMake(64,0,0,0);
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     [self.view addSubview:self.table];
+}
+- (void)navBarInit
+{
+    _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    _navBar.barTintColor = [UIColor whiteColor];
+    _navBar.translucent = NO;
+    NSDictionary *attributes = @{
+                                 NSForegroundColorAttributeName: [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0],
+                                 NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:16.0]
+                                 };
+    [_navBar setTitleTextAttributes:attributes];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setShadowImage:[UIImage new]];
+    UINavigationItem *navItem = [[UINavigationItem alloc] init];
+    navItem.title = @"Add Details";
+    UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(Canceled:)];
+    leftButton.tintColor = [UIColor redColor];
+    navItem.leftBarButtonItem = leftButton;
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(PackageDataAndCheckInfomation:)];
+    rightButton.tintColor = [UIColor redColor];
+    navItem.rightBarButtonItem = rightButton;
+    _navBar.items = @[navItem];
+    [self.view addSubview:_navBar];
+}
+- (void)toolBarInit
+{
+    _toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-310, self.view.frame.size.width, 44)];
+    _toolBar.barStyle   = UIBarStyleBlackOpaque;
+    _toolBar.opaque = NO;
+    _toolBar.backgroundColor = [UIColor clearColor];
+    _toolBar.barTintColor = [UIColor whiteColor];
+    UIBarButtonItem *itemDone  = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(removeDatePickerAndToolBar:)];
+    itemDone.tintColor = [UIColor redColor];
+    UIBarButtonItem *itemSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    _toolBar.items = @[itemSpace,itemDone];
+    [self.view addSubview:_toolBar];
+}
+- (BOOL)checkNameDetails:(NSString*)name
+{
+    if(name.length>20 || name.length<3){
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Invaid Entry" message:
+                                              @"Invaid Entry: Event Name length can only be less then or equal to 20 and be greater than 2"
+                                              preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
+        [alertController addAction:ok];
+        [self presentViewController:alertController animated:YES completion:nil];
+        return false;
+    }else
+        return true;
+}
+- (void)configEventNameView:(NSString*)s
+{
+    _EventName = [[UITextField alloc]initWithFrame:CGRectMake(150, -25, 200, 100)];
+    _EventName.delegate = self;
+    _EventName.placeholder = s;
+    _EventName.textColor = [UIColor grayColor];
+    _EventName.textAlignment = NSTextAlignmentRight;
+    _EventName.userInteractionEnabled = YES;
+    _EventName.keyboardType = UIKeyboardTypeTwitter;
+    [_EventName becomeFirstResponder];
+}
+- (void)configEventDateView
+{
+    _EventDate = [[UILabel alloc]initWithFrame:CGRectMake(150+100, -25, 100, 100)];
+    _EventDate.textColor = [UIColor colorWithRed:201.0f/255.0f green:201.0f/255.0f blue:207.0f/255.0f alpha:1000];
+    _EventDate.textAlignment = NSTextAlignmentRight;
+    UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeDate:)];
+    [_EventDate setUserInteractionEnabled:YES];
+    [_EventDate addGestureRecognizer:gesture];
+}
+- (void)configEventTime:(NSString*)s
+{
+    _EventTime = [[UILabel alloc]initWithFrame:CGRectMake(150+100, -25, 100, 100)];
+    _EventTime.text = s;
+    _EventTime.textColor = [UIColor colorWithRed:201.0f/255.0f green:201.0f/255.0f blue:207.0f/255.0f alpha:1000];
+    _EventTime.textAlignment = NSTextAlignmentRight;
+    UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeTime:)];
+    [_EventTime setUserInteractionEnabled:YES];
+    [_EventTime addGestureRecognizer:gesture];
+}
+- (void)configEventNotifyTimeView:(NSString*)s
+{
+    _EventNotify = [[UILabel alloc]initWithFrame:CGRectMake(150+100, -25, 100, 100)];
+    _EventNotify.text = s;
+    _EventNotify.textColor = [UIColor colorWithRed:201.0f/255.0f green:201.0f/255.0f blue:207.0f/255.0f alpha:1000];
+    _EventNotify.textAlignment = NSTextAlignmentRight;
+    UITapGestureRecognizer* gesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(changeTime:)];
+    [_EventNotify setUserInteractionEnabled:YES];
+    [_EventNotify addGestureRecognizer:gesture];
+}
+//-----------------------Sender_Methods--------------------------
+-(void)resignOnTap:(id)sender
+{
+    if(_currentResponder == _EventDate || _currentResponder == _EventTime)
+        [self removeDatePickerAndToolBar:_EventTime];
+    [_currentResponder resignFirstResponder];
+}
+-(void)Canceled:(id)sender
+{
     
 }
-
-
+-(void)PackageDataAndCheckInfomation:(id)sender
+{
+    if([self checkNameDetails:_EventName.text]){
+        NSLog(@"name is good");
+    }
+}
+-(void)changeDate:(id)sender
+{
+    [_currentResponder resignFirstResponder];
+    _currentResponder = _EventDate;
+       if(_datePicker == nil)
+           self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-300, self.view.frame.size.width, 300)];
+           [self.datePicker setDatePickerMode:UIDatePickerModeDate];
+           [self.datePicker addTarget:self action:@selector(onDatePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
+           [self.view addSubview:_datePicker];
+           //[self toolBarInit];
+           [_datePicker becomeFirstResponder];
+    _datePicker.datePickerMode = UIDatePickerModeDate;
+}
+-(void)changeTime:(id)sender
+{
+    [_currentResponder resignFirstResponder];
+    _currentResponder = _EventTime;
+        if(_datePicker == nil)
+            self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height-300, self.view.frame.size.width, 300)];
+            [self.datePicker setDatePickerMode:UIDatePickerModeDate];
+            [self.datePicker addTarget:self action:@selector(onDatePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
+            [self.view addSubview:_datePicker];
+            //[self toolBarInit];
+            [_datePicker becomeFirstResponder];
+    _datePicker.datePickerMode = UIDatePickerModeTime;
+}
+-(void)onDatePickerValueChanged:(id)sender
+{
+    NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+    NSLog(@"%@",_datePicker.date);
+    if(_datePicker.datePickerMode){
+        [dateFormat setDateFormat:@"MM/dd/yyyy"];
+        _EventDate.text  = [NSString stringWithFormat:@"%@",[dateFormat stringFromDate:_datePicker.date]];
+        [_data setObject:_datePicker.date forKey:@"Event Date"];
+    }else{
+        [dateFormat setDateFormat:@"hh:mm a"];
+        _EventTime.text = [NSString stringWithFormat:@"%@",[dateFormat stringFromDate:_datePicker.date]];
+        [_data setObject:_datePicker.date forKey:@"Event Time"];
+    }
+}
+-(void)removeDatePickerAndToolBar:(id)sender
+{
+    [self.datePicker removeFromSuperview];
+    self.datePicker = nil;
+    [self.toolBar removeFromSuperview];
+    self.toolBar = nil;
+}
+-(void)switchToggled:(id)selctor
+{
+    if(_data.count <= 4){
+        NSArray *insertIndexPaths = [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:1],nil];
+        [_data setObject:@"7/10/17" forKey:@"Notify Time"];
+        [_table beginUpdates];
+        [_table insertRowsAtIndexPaths:insertIndexPaths withRowAnimation:UITableViewRowAnimationLeft];
+        [_table endUpdates];
+    }else{
+        [_currentResponder resignFirstResponder];
+        [self removeDatePickerAndToolBar:_EventTime];
+        NSArray *deleteIndexPaths = [NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:1],nil];
+        [_data removeObjectForKey:@"Notify Time"];
+        [_table beginUpdates];
+        [_table deleteRowsAtIndexPaths:deleteIndexPaths withRowAnimation:UITableViewRowAnimationRight];
+        [_table endUpdates];
+    }
+}
 
 @end

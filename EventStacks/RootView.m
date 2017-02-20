@@ -16,6 +16,18 @@
 #define SLIDE_TIMING .25
 #define PANEL_WIDTH 150
 
+
+/*____________  __                 __   ____________   __       _
+ /  __________| \ \               / /  /  __________| |  \     | |
+ | |             \ \             / /   | |            |   \    | |
+ | |              \ \           / /    | |            | |\ \   | |
+ | |______         \ \         / /     | |_____       | | \ \  | |
+ |  ______|         \ \       / /      |  _____|      | |  \ \ | |
+ | |                 \ \     / /       | |            | |   \ \| |
+ | |                  \ \   / /        | |            | |    \   |
+ | |__________         \ \_/ /         | |__________  | |     \  |
+ \____________|         \___/          \____________| |_|      \_|
+*/
 @interface RootView () <ViewControllerProtocol,AddViewControllerProtocol, UIGestureRecognizerDelegate>
 
 @property (nonatomic , retain)ViewController * centerViewController;
@@ -45,9 +57,6 @@
     [self addChildViewController:_centerViewController];
     //[_centerViewController didMoveToParentViewController:self];
 }
-
-
-
 
 -(UIView *)getSideView {
     if (self.AddViewController == nil)

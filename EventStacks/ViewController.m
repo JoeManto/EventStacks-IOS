@@ -27,12 +27,12 @@ NSMutableDictionary *dayData;
 
 @implementation ViewController
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor blueColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     cellSections = @[@"Monday",@"Tuesday",@"Wednesday",@"Thursday",@"Friday",@"Saturday",@"Sunday"];
-   
     [self tableInit];
     
     eventData = [[NSMutableDictionary alloc]initWithObjects:@[@"5:00PM",@"9items",@"Beach Trip"] forKeys:@[@"time",@"numItems",@"tripName"]];
@@ -49,47 +49,11 @@ NSMutableDictionary *dayData;
     [[dayData objectForKey:@"Monday"] addEntriesFromDictionary:event2];
     
     //NSLog(@"%@",[[dayData objectForKey:@"Monday"]objectForKey:@"trip2"]);
-
-
-    _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
-    _navBar.barTintColor = [UIColor whiteColor];
-    _navBar.translucent = NO;
-    
-   
-    
-    NSDictionary *attributes = @{
-                                 NSForegroundColorAttributeName: [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0],
-                                 NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:16.0]
-                                 };
- 
-    
-    [_navBar setTitleTextAttributes:attributes];
-     
-    
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setShadowImage:[UIImage new]];
-    
-
-    UINavigationItem *navItem = [[UINavigationItem alloc] init];
-    navItem.title = @"Events";
-    
-    //UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Left" style:UIBarButtonItemStylePlain target:self action:@selector(yourMethod:)];
-    //navItem.leftBarButtonItem = leftButton;
-    
-    //UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"+" style:UIBarButtonItemStylePlain target:self action:@selector(yourOtherMethod:)];
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(changeToAddView:)];
-    
-    rightButton.tintColor = [UIColor redColor];
-    navItem.rightBarButtonItem = rightButton;
-    
-    _navBar.items = @[navItem];
-    
-    [self.view addSubview:_navBar];
-
+    [self navBarInit];
 }
-
--(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
-    
+//-------------------Delegate_Methods--------------------------
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, 40)];
     [headerView setBackgroundColor:[UIColor whiteColor]];
     UILabel * dayLabel = [[UILabel alloc]initWithFrame:CGRectMake(15, 20, 200, 40)];
@@ -101,44 +65,39 @@ NSMutableDictionary *dayData;
 
     return headerView;
 }
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
     return 60.0;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 90.0f;
 }
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
     return [cellSections count];
 }
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
     NSString *sectionTitle = [cellSections objectAtIndex:section];
     NSArray *sectionData = [dayData objectForKey:sectionTitle];
-   //NSLog(@"%ld , %@",[sectionData count],sectionTitle);
+    //NSLog(@"%ld , %@",[sectionData count],sectionTitle);
     return [sectionData count];
 }
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
     static NSString *cellIdentifier = @"cellIdentifier";
     CustomTableCell *cell = [self.table dequeueReusableCellWithIdentifier:cellIdentifier];
 
-    if(cell == nil) {
+    if(cell == nil)
         cell = [[CustomTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
         CGRect contentViewFrame = cell.contentView.frame;
         contentViewFrame.size.width = _table.frame.size.width;
         cell.contentView.frame = contentViewFrame;
         [cell addSubviews];
-    }
-   //NSString *sectionTitle = [cellSections objectAtIndex:indexPath.section];
+    //NSString *sectionTitle = [cellSections objectAtIndex:indexPath.section];
     NSDictionary *rowData = [[dayData objectForKey:@"Monday"]objectForKey:[NSString stringWithFormat:@"trip%ld",indexPath.row]];
     NSLog(@"%@ %ld",rowData,indexPath.row);
-    
     [cell setBackgroundColor:[UIColor colorWithRed:250.f/256.f green:250.f/256.f blue:250.f/256.f alpha:100]];
     cell.eventName.text = [rowData objectForKey:@"tripName"];
     cell.eventTime.text = [rowData objectForKey:@"time"];
@@ -148,21 +107,14 @@ NSMutableDictionary *dayData;
     }
     return cell;
 }
-
-
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
     EditSelectedView * editingView = [[EditSelectedView alloc]initWithFrame:CGRectMake(self.view.frame.size.width/2-150, self.view.frame.size.height/2-150, 300, 300)];
     [self.view addSubview:editingView];
 }
-
-
-
-
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
     //UITouch *touch = [touches anyObject];
-    
    /* if(count < 1){
         [_delegate showSideView];
         count++;
@@ -172,22 +124,17 @@ NSMutableDictionary *dayData;
     }
     */
 }
-
-
-- (void)didReceiveMemoryWarning {
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
-    
 }
-
--(void)changeToAddView:(id)sender{
-    
+- (void)changeToAddView:(id)sender
+{
     [_delegate showSideView];
-    
-    NSLog(@"Changed to Add View");
 }
-
-
--(void)tableInit{
+//-------------------Config_Methods--------------------------
+- (void)tableInit
+{
     _table = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     _table.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.0];
     _table.delegate = self;
@@ -196,11 +143,30 @@ NSMutableDictionary *dayData;
     _table.showsVerticalScrollIndicator = true;
     _table.contentInset = UIEdgeInsetsMake(64,0,0,0);
     _table.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
     [self.view addSubview:self.table];
-
 }
-
-
+- (void)navBarInit
+{
+    _navBar = [[UINavigationBar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 64)];
+    _navBar.barTintColor = [UIColor whiteColor];
+    _navBar.translucent = NO;
+    NSDictionary *attributes = @{
+                                 NSForegroundColorAttributeName: [UIColor colorWithRed:0.0/255.0 green:0.0/255.0 blue:0.0/255.0 alpha:1.0],
+                                 NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Light" size:16.0]
+                                 };
+    [_navBar setTitleTextAttributes:attributes];
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    [[UINavigationBar appearance] setShadowImage:[UIImage new]];
+    UINavigationItem *navItem = [[UINavigationItem alloc] init];
+    navItem.title = @"Events";
+    //UIBarButtonItem *leftButton = [[UIBarButtonItem alloc] initWithTitle:@"Left" style:UIBarButtonItemStylePlain target:self action:@selector(yourMethod:)];
+    //navItem.leftBarButtonItem = leftButton;
+    //UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithTitle:@"+" style:UIBarButtonItemStylePlain target:self action:@selector(yourOtherMethod:)];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(changeToAddView:)];
+    rightButton.tintColor = [UIColor redColor];
+    navItem.rightBarButtonItem = rightButton;
+    _navBar.items = @[navItem];
+    [self.view addSubview:_navBar];
+}
 
 @end

@@ -10,7 +10,7 @@
 @protocol AddViewControllerProtocol <NSObject>
 
 @end
-@interface AddViewController : UIViewController <UITableViewDelegate,UITableViewDataSource>
+@interface AddViewController : UIViewController <UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
 @property (nonatomic, assign) id<AddViewControllerProtocol> delegate;
 

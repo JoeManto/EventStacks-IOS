@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7099A6EE1E4550B10096FFCE /* EventStacks.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 7099A6ED1E4550B10096FFCE /* EventStacks.xcdatamodeld */; };
 		70F6F3131E1A0FAB003F1D6B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6F3121E1A0FAB003F1D6B /* main.m */; };
 		70F6F3161E1A0FAB003F1D6B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6F3151E1A0FAB003F1D6B /* AppDelegate.m */; };
 		70F6F31C1E1A0FAB003F1D6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70F6F31A1E1A0FAB003F1D6B /* Main.storyboard */; };
-		70F6F31F1E1A0FAB003F1D6B /* EventStacks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 70F6F31D1E1A0FAB003F1D6B /* EventStacks.xcdatamodeld */; };
 		70F6F3211E1A0FAB003F1D6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 70F6F3201E1A0FAB003F1D6B /* Assets.xcassets */; };
 		70F6F3241E1A0FAB003F1D6B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70F6F3221E1A0FAB003F1D6B /* LaunchScreen.storyboard */; };
 		70F6F32F1E1A0FAB003F1D6B /* EventStacksTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6F32E1E1A0FAB003F1D6B /* EventStacksTests.m */; };
@@ -41,12 +41,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7099A6ED1E4550B10096FFCE /* EventStacks.xcdatamodeld */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = EventStacks.xcdatamodeld; sourceTree = "<group>"; };
 		70F6F30E1E1A0FAB003F1D6B /* EventStacks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventStacks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70F6F3121E1A0FAB003F1D6B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		70F6F3141E1A0FAB003F1D6B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		70F6F3151E1A0FAB003F1D6B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		70F6F31B1E1A0FAB003F1D6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		70F6F31E1E1A0FAB003F1D6B /* EventStacks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EventStacks.xcdatamodel; sourceTree = "<group>"; };
 		70F6F3201E1A0FAB003F1D6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		70F6F3231E1A0FAB003F1D6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		70F6F3251E1A0FAB003F1D6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 				70F6F3201E1A0FAB003F1D6B /* Assets.xcassets */,
 				70F6F3221E1A0FAB003F1D6B /* LaunchScreen.storyboard */,
 				70F6F3251E1A0FAB003F1D6B /* Info.plist */,
-				70F6F31D1E1A0FAB003F1D6B /* EventStacks.xcdatamodeld */,
+				7099A6ED1E4550B10096FFCE /* EventStacks.xcdatamodeld */,
 			);
 			name = OtherSupportingFiles;
 			sourceTree = "<group>";
@@ -301,6 +301,7 @@
 				70F6F3241E1A0FAB003F1D6B /* LaunchScreen.storyboard in Resources */,
 				70F6F3211E1A0FAB003F1D6B /* Assets.xcassets in Resources */,
 				70F6F31C1E1A0FAB003F1D6B /* Main.storyboard in Resources */,
+				7099A6EE1E4550B10096FFCE /* EventStacks.xcdatamodeld in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,7 +334,6 @@
 				70F6F3541E1A0FE8003F1D6B /* LeftViewController.m in Sources */,
 				70F6F3531E1A0FE8003F1D6B /* UIView+AddViewController.m in Sources */,
 				70F6F3131E1A0FAB003F1D6B /* main.m in Sources */,
-				70F6F31F1E1A0FAB003F1D6B /* EventStacks.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -586,19 +586,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		70F6F31D1E1A0FAB003F1D6B /* EventStacks.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				70F6F31E1E1A0FAB003F1D6B /* EventStacks.xcdatamodel */,
-			);
-			currentVersion = 70F6F31E1E1A0FAB003F1D6B /* EventStacks.xcdatamodel */;
-			path = EventStacks.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 70F6F3061E1A0FAB003F1D6B /* Project object */;
 }
