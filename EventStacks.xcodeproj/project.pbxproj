@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7099A6EE1E4550B10096FFCE /* EventStacks.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = 7099A6ED1E4550B10096FFCE /* EventStacks.xcdatamodeld */; };
+		70C13BB91E5A6C410084F76C /* EventData.m in Sources */ = {isa = PBXBuildFile; fileRef = 70C13BB81E5A6C410084F76C /* EventData.m */; };
 		70F6F3131E1A0FAB003F1D6B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6F3121E1A0FAB003F1D6B /* main.m */; };
 		70F6F3161E1A0FAB003F1D6B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 70F6F3151E1A0FAB003F1D6B /* AppDelegate.m */; };
 		70F6F31C1E1A0FAB003F1D6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70F6F31A1E1A0FAB003F1D6B /* Main.storyboard */; };
@@ -42,6 +43,8 @@
 
 /* Begin PBXFileReference section */
 		7099A6ED1E4550B10096FFCE /* EventStacks.xcdatamodeld */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = EventStacks.xcdatamodeld; sourceTree = "<group>"; };
+		70C13BB71E5A6C410084F76C /* EventData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventData.h; sourceTree = "<group>"; };
+		70C13BB81E5A6C410084F76C /* EventData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventData.m; sourceTree = "<group>"; };
 		70F6F30E1E1A0FAB003F1D6B /* EventStacks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EventStacks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70F6F3121E1A0FAB003F1D6B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		70F6F3141E1A0FAB003F1D6B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -159,6 +162,8 @@
 				70F6F3481E1A0FE8003F1D6B /* UIView+AddViewController.m */,
 				70F6F3491E1A0FE8003F1D6B /* LeftViewController.h */,
 				70F6F34A1E1A0FE8003F1D6B /* LeftViewController.m */,
+				70C13BB71E5A6C410084F76C /* EventData.h */,
+				70C13BB81E5A6C410084F76C /* EventData.m */,
 				70F6F34B1E1A0FE8003F1D6B /* ViewController.h */,
 				70F6F34C1E1A0FE8003F1D6B /* ViewController.m */,
 				70F6F3511E1A0FE8003F1D6B /* RootView.h */,
@@ -333,6 +338,7 @@
 				70F6F3161E1A0FAB003F1D6B /* AppDelegate.m in Sources */,
 				70F6F3541E1A0FE8003F1D6B /* LeftViewController.m in Sources */,
 				70F6F3531E1A0FE8003F1D6B /* UIView+AddViewController.m in Sources */,
+				70C13BB91E5A6C410084F76C /* EventData.m in Sources */,
 				70F6F3131E1A0FAB003F1D6B /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
