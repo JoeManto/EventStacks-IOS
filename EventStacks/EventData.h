@@ -10,4 +10,28 @@
 
 @interface EventData : NSObject
 
+- (id)initWithData:(NSString*)name withEventDate:(NSDate *)date withEventTime:(NSString*)time withNotifyDate:(NSDate*)notifyDate withNotifyTime:(NSString*)notfiyTime;
+
+- (NSString*)getEventName;
+
+- (NSDate*)getEventDate;
+
+- (NSString*)getEventTime;
+
+- (NSDate*)getEventNotifyDate;
+
+- (NSString*)getEventNotifyTime;
+
+- (void)setEventName:(NSString*)name;
+
+- (void)setEventDate:(NSDate*)date;
+
+- (void)setEventTime:(NSString*)time;
+
+- (void)setEventNotifyDate:(NSDate*)date;
+
+- (void)setEventNotifyTime:(NSString*)time;
+
 @end
+
+
